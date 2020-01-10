@@ -35,4 +35,7 @@ ggplot(data = demo) +
 
 
 #实例2
-ss
+# 想让y轴显示比例而不是具体的count值
+
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
