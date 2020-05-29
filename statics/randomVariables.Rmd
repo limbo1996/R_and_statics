@@ -1,0 +1,51 @@
+---
+title: "随机变量"
+author: "limbo"
+date: "5/29/2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 随机变量
+
+### 读取数据
+
+```{r read data}
+setwd("~/Documents/R_and_statics/statics/")
+dat <- read.csv("femaleMiceWeights.csv")
+```
+
+### 查看前几行
+```{r head}
+head(dat)
+```
+
+### 计算不同平均值
+
+```{r mean}
+library(dplyr)
+
+control <- dat %>% 
+  filter(Diet == "chow") %>%   
+  select(Bodyweight) %>% 
+  unlist()
+
+treatment <- dat %>% 
+  filter(Diet == "hf") %>%     
+  select(Bodyweight) %>% 
+  unlist()
+
+mean(treatment)
+mean(control)
+
+
+obsdiff <- mean(treatment) - mean(control)
+print(obsdiff)
+```
+### 随机变量
+
