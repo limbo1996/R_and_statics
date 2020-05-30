@@ -48,4 +48,61 @@ obsdiff <- mean(treatment) - mean(control)
 print(obsdiff)
 ```
 ### 随机变量
+#### 下载数据
+```{r download female weight data}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/femaleControlsPopulation.csv"
+filename <- "femaleControlsPopulation.csv"
+if (!file.exists(filename)) download(url,destfile=filename)
+population <- read.csv(filename)
+population <- unlist(population) # turn it into a numeric
+```
+#### 抽样12 mice
+```{r}
+control <- sample(population, 12)
+mean(control)
+```
+### The Null Hypothesis
+#### 12 control mice
+```{r}
+control <- sample(population, 12)
+```
+#### another 12 control mice that we act as if they were not 
+```{r}
+treatment <- sample(population, 12)
+print(mean(treatment) - mean(control))
+```
+#### do it 10000 times "for-loop"
+```{r}
+n <- 10000
+null <- vector("numeric", n)
+for (i in 1:n) {
+  control <- sample(population, 12)
+  treatment <- sample(population, 12)
+  null[i] <- mean(treatment) - mean(control)
+}
+```
+#### 比较`null`大于等于`obsdiff`的比例
+```{r}
+mean(null >= obsdiff)
+```
+这就是p值得定义
+## Distribution
+
+```{r}
+library(UsingR)
+x <- father.son$fheight
+round(sample(x, 10), 1)# 对其中数据随机选取去10个
+```
+### 累积分布函数
+`cumulative distribution function(CDF)`
+```{r}
+samllest <- floor(min(x))
+largest <- ceiling(max(x))
+values <- seq(samllest, largest, len = 300)
+heightecdf <- ecdf(x)
+plot(values, heightecdf(values), type = "l", xlab = "a (Height in inches)", ylab = "Pr ( x <= a)")
+```
+
+s
 
