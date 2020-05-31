@@ -1,0 +1,30 @@
+---
+title: "Population, Samples, Estimates"
+author: "limbo"
+date: "5/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Population parameters
+```{r}
+library(downloader)
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- "mice_pheno.csv"
+download(url,destfile=filename)
+dat <- read.csv(filename)
+```
+比较不同size的`control`组
+```{r}
+library(tidyverse)
+controlPopulation <- dat %>% 
+  filter(Sex == "F" & Diet == "chow") %>% 
+  select(Bodyweight) %>% 
+  unlist()
+
+length(controlPopulation)
+```
+可以据此计算平均数和方差
+然后计算`t`值
